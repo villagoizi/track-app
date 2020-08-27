@@ -10,5 +10,7 @@ module.exports = {
     ecmaVersion: 12
   },
   rules: {
+    camelcase: 2,
+    'dot-notation': [2, { allowKeywords: false, allowPattern: '^[a-z]+(_[a-z]+)+$' }]
   }
 }
