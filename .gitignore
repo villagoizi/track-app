@@ -1,2 +1,4 @@
 client/node_modules
 server/node_modules
+server/example.http
+server/trackapp.sqlite

@@ -9,5 +9,8 @@ module.exports = {
       dialect: process.env.DIALECT || 'sqlite',
       storage: './trackapp.sqlite'
     }
+  },
+  authentication: {
+    jwtSecret: process.env.JWT_SECRET || 'modedevelopment'
   }
 }

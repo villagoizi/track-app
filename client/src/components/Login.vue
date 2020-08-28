@@ -4,13 +4,13 @@
       <v-col md="5">
         <div class="white elevation-2">
           <v-toolbar flat dense class="cyan" dark>
-            <v-toolbar-title>Register</v-toolbar-title>
+            <v-toolbar-title>Login</v-toolbar-title>
           </v-toolbar>
           <v-form ref="form" class="px-4 py-4 text-center">
             <v-text-field v-model="email" label="Email"></v-text-field>
             <v-text-field v-model="password" label="Password"></v-text-field>
             <v-alert type="error" v-if="error !== null"> {{this.error}} </v-alert>
-            <v-btn color="cyan" dark @click="register">Register</v-btn>
+            <v-btn color="cyan" dark @click="login">Login</v-btn>
           </v-form>
         </div>
       </v-col>
@@ -29,9 +29,9 @@ export default {
     }
   },
   methods: {
-    async register () {
+    async login () {
       try {
-        const response = await Authentication.register({
+        const response = await Authentication.login({
           email: this.email,
           password: this.password
         })
