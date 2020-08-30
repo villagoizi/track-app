@@ -5,6 +5,7 @@
         <div class='white elevation-2'>
           <v-toolbar flat dense class='cyan' dark>
             <v-toolbar-title>{{title}}</v-toolbar-title>
+            <slot name="action-song" />
           </v-toolbar>
           <div class='px-4 py-4 text-center'>
               <slot>No slot</slot>

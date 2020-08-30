@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Register from '../components/Register.vue'
 import Login from '../components/Login.vue'
 import Songs from '../components/Songs.vue'
+import CreateSong from '../components/CreateSong.vue'
+import Song from '../components/Song.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +29,16 @@ const routes = [
     path: '/songs',
     name: 'Songs',
     component: Songs
+  },
+  {
+    path: '/songs/add',
+    name: 'Song-create',
+    component: CreateSong
+  },
+  {
+    path: '/songs/:songId',
+    name: 'Song-id',
+    component: Song
   }
 ]
 

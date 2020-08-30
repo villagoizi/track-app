@@ -13,13 +13,23 @@ module.exports = {
   },
   async createSong (req, res) {
     try {
-      console.log(Song, 'and req.body: ', req.body)
       const song = await Song.create(req.body)
       res.json(song)
     } catch (e) {
-      console.log('error:  ', e)
       res.status(500).json({
         error: 'Fatal error trying to create the song, try more last'
+      })
+    }
+  },
+  async getSongId (req, res) {
+    try {
+      const song = await Song.findByPk(req.params.id)
+      if (!song) res.status(404).json({ error: 'Song is not exists' })
+      res.json(song)
+    } catch (e) {
+      console.log(e)
+      res.status(500).json({
+        error: 'Fatal error trying get song, try more last'
       })
     }
   }
