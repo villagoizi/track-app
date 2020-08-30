@@ -7,7 +7,8 @@ module.exports = {
     options: {
       host: process.env.DB_HOST || 'localhost',
       dialect: process.env.DIALECT || 'sqlite',
-      storage: './trackapp.sqlite'
+      storage: './trackapp.sqlite',
+      logging: false
     }
   },
   authentication: {

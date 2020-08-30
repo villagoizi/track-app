@@ -1,25 +1,29 @@
 <template>
-  <panel title="Songs">
-    <v-btn @click="navigateTo({ name: 'Song-create'})" class="mx-2" medium absolute right slot="action-song" fab dark color="cyan">
-      <v-icon dark>mdi-plus</v-icon>
-    </v-btn>
-    <div class="d-flex mb-3 shadows" v-for="song in songs" :key="song.id">
-      <div class="img-container d-inline-block">
-        <img :src="song.albumImageUrl" />
+  <div>
+    <search-song />
+    <panel title="Songs">
+      <v-btn v-if="$store.state.isLoggedUser" :to="{ name: 'Song-create'}" class="mx-2" medium absolute right slot="action-song" fab dark color="cyan">
+        <v-icon dark>mdi-plus</v-icon>
+      </v-btn>
+      <div class="d-flex mb-3 shadows" v-for="song in songs" :key="song.id">
+        <div class="img-container d-inline-block">
+          <img :src="song.albumImageUrl" />
+        </div>
+        <div class="pa-2 mx-auto d-flex flex-column justify-space-between">
+          <p class="title">{{song.title}}</p>
+          <p class="artist">{{song.artist}}</p>
+          <p class="album">{{song.album}}</p>
+          <v-btn class="cyan" dark :to="{ name: 'Song-id', params: { songId: song.id } }">View</v-btn>
+        </div>
       </div>
-      <div class="pa-2 mx-auto d-flex flex-column justify-space-between">
-        <p class="title">{{song.title}}</p>
-        <p class="artist">{{song.artist}}</p>
-        <p class="album">{{song.album}}</p>
-        <v-btn class="cyan" dark @click="navigateTo({ name: 'Song-id', params: { songId: song.id } })">View</v-btn>
-      </div>
-    </div>
-  </panel>
+    </panel>
+  </div>
 </template>
 
 <script>
 import SongsService from '@/services/SongsService.js'
 import Panel from '@/components/Panel.vue'
+import SearchSong from '@/components/SearchSong.vue'
 export default {
   data () {
     return {
@@ -27,16 +31,21 @@ export default {
     }
   },
   components: {
-    Panel
+    Panel,
+    SearchSong
   },
   async mounted () {
     //   Do the request in api
     const response = await SongsService.index()
     this.songs = response.data
   },
-  methods: {
-    navigateTo (route) {
-      this.$router.push(route)
+  watch: {
+    '$route.query.search': {
+      immediate: true,
+      async handler (value) {
+        if (!value) return
+        this.songs = (await SongsService.index(value)).data
+      }
     }
   }
 }

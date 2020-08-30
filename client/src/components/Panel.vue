@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify='center'>
-      <v-col md='5'>
+      <v-col md='6'>
         <div class='white elevation-2'>
           <v-toolbar flat dense class='cyan' dark>
             <v-toolbar-title>{{title}}</v-toolbar-title>

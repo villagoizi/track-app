@@ -25,7 +25,7 @@
           </div>
         </v-col>
       </v-row>
-      <v-btn color='cyan' dark @click='createSong'>Create Song</v-btn>
+      <v-btn color='cyan' dark @click='saveSong'>Save song</v-btn>
     </v-container>
   </div>
 </template>
@@ -47,18 +47,23 @@ export default {
       },
       required: [
         (v) => !!v || 'Required'
-      ]
+      ],
+      songId: this.$route.params.songId
     }
   },
   methods: {
-    async createSong () {
+    async saveSong () {
       try {
-        await SongsService.create(this.song)
-        this.$router.push({ name: 'Songs' })
-      } catch (error) {
-        console.log(error)
+        await SongsService.editSong(this.songId, this.song)
+        this.$router.push({ name: 'Song-id', params: { songId: this.songId } })
+      } catch (e) {
+        console.log(e)
       }
     }
+  },
+  async mounted () {
+    const response = await SongsService.getById(this.songId)
+    this.song = response.data
   }
 }
 </script>
