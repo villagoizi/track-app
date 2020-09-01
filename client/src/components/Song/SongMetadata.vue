@@ -16,13 +16,66 @@
         </em>
         {{song.genre}}
       </p>
-      <v-btn v-if="$store.state.isLoggedUser" class="cyan" dark :to="{ name: 'Song-edit-id', params: { songId: song.id } }">Edit</v-btn>
+      <v-btn v-if="isLoggedUser" class="cyan" dark :to="{ name: 'Song-edit-id', params: { songId: song.id } }">Edit</v-btn>
+      <v-btn v-if="isLoggedUser && !isBookmark" class="cyan mt-1" dark @click="save" >Bookmark</v-btn>
+      <v-btn v-if="isLoggedUser && isBookmark" class="cyan mt-1" dark @click="unsave">Unbookmark</v-btn>
     </div>
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
+import BookmarkService from '@/services/BookmarkService.js'
 export default {
-  props: ['song']
+  props: ['song'],
+  data () {
+    return {
+      isBookmark: false,
+      bookmark: {}
+    }
+  },
+  computed: {
+    ...mapState(['isLoggedUser'])
+  },
+  methods: {
+    async save () {
+      try {
+        const { data } = await BookmarkService.book({
+          songId: this.song.id,
+          userId: this.$store.state.user.id
+        })
+        this.bookmark = data
+        this.isBookmark = true
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    async unsave () {
+      try {
+        await BookmarkService.unbook(this.bookmark.id)
+        this.bookmark = {}
+        this.isBookmark = false
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  },
+  async mounted () {
+    if (!this.$store.state.isLoggedUser) {
+      return
+    }
+    try {
+      const { data } = await BookmarkService.index({
+        songId: this.song.id,
+        userId: this.$store.state.user.id
+      })
+      this.isBookmark = !!data
+      this.bookmark = data
+      console.log('bookmark', this.isBookmark, this.song.id)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
 }
 </script>
 <style>

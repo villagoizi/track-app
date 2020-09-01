@@ -11,6 +11,5 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     freezeTableName: true
   })
-
   return Song
 }
