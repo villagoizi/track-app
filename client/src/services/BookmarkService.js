@@ -11,5 +11,8 @@ export default {
   },
   unbook (bookmarkId) {
     return Api().get(`/bookmark/${bookmarkId}`)
+  },
+  user (userId) {
+    return Api().get(`/bookmark/user/${userId}`)
   }
 }

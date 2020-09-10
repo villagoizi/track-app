@@ -1,5 +1,5 @@
 <template>
-  <panel title="Login">
+  <panel title="Login" cols="6">
     <v-form ref='form'>
       <v-text-field v-model='email' type='email' label='Email'></v-text-field>
       <v-text-field v-model='password' type='password' label='Password'></v-text-field>

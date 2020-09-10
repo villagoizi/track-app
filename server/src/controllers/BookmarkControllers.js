@@ -1,4 +1,4 @@
-const { Bookmark } = require('../models')
+const { Bookmark, Song } = require('../models')
 // const { Op } = require('sequelize')
 
 module.exports = {
@@ -16,6 +16,21 @@ module.exports = {
       console.log(e)
       res.status(500).json({
         error: 'Fatal error trying to create the song, try more last'
+      })
+    }
+  },
+  async getBookmarUser (req, res) {
+    try {
+      const { userId } = req.params
+      const bookmark = await Bookmark.findAll({
+        where: { UserId: userId },
+        include: [{ model: Song }]
+      })
+      res.json(bookmark)
+    } catch (e) {
+      console.log(e)
+      res.status(500).json({
+        error: 'Fatal error tryin fetching data of bookmark, try more last'
       })
     }
   },

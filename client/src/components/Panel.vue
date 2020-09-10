@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify='center'>
-      <v-col md='6'>
+      <v-col :cols="cols">
         <div class='white elevation-2'>
           <v-toolbar flat dense class='cyan' dark>
             <v-toolbar-title>{{title}}</v-toolbar-title>
@@ -20,7 +20,8 @@
 export default {
   name: 'Panel',
   props: {
-    title: String
+    title: String,
+    cols: String
   }
 }
 </script>
